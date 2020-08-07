@@ -16,9 +16,9 @@ const getPeople = () => {
 
 const displayPeople = () => {
   const allPosts = document.getElementById("all-posts")
-  arrayOfPeople.map((post) => {
-    console.log(post)
+  arrayOfPeople.map((post, i) => {
     const li = document.createElement("li")
+    const { name, phone, email, dob, location, picture } = post
     const img = document.createElement("img")
     const btn = document.createElement("button")
     const bText = document.createTextNode("More Info")
@@ -28,18 +28,19 @@ const displayPeople = () => {
     img.src = post.picture.large
     li.setAttribute("id", "list")
     btn.setAttribute("onclick", "moreInfo(this)")
-    // btn.addEventListener("onclick", moreInfo)
     btn.setAttribute("id", "btn")
-    const text = document.createTextNode(
+    const contactInfo = document.createTextNode(
       `Name: ${post.name.first} ${post.name.last}`
     )
-    const innerText = document.createTextNode(`Phone: ${post.phone}`)
-    li.appendChild(text)
+    const moreContactInfo = document.createTextNode(
+      `Phone: ${phone}, Email: ${email}, Address: ${location.street.number} ${location.street.name} ${location.city} ${location.state} ${location.postcode} ${location.country}, Birthday: ${dob.date}`
+    )
+    li.appendChild(contactInfo)
     btn.appendChild(bText)
     allPosts.append(li)
     allPosts.append(img)
     allPosts.append(btn)
-    myPara.appendChild(innerText)
+    myPara.appendChild(moreContactInfo)
     li.appendChild(myPara)
   })
 }
@@ -53,13 +54,6 @@ const moreInfo = () => {
     x.style.display = "none"
   }
 }
-
-// const moreInfo = (post) => {
-//     const li = document.createElement("li")
-//     const text = document.createTextNode(`${post.gender}`)
-//     li.appendChild(text)
-//     btn.parentNode.insertBefore(li, btn.nextSibling)
-//   })
 
 // This function logs the results in your browser's console
 const consolePeople = () => {
