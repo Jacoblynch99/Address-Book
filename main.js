@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-console */
 let arrayOfPeople
 
 // This function waits for the web page to be loaded, when it does it will run the code inside of it which happens to be getPosts()
 window.onload = function () {
+  // eslint-disable-next-line no-use-before-define
   getPeople()
 }
 
@@ -14,21 +17,34 @@ const getPeople = () => {
     .then((people) => (arrayOfPeople = people.results))
 }
 
+const moreInfo = (id) => {
+  const contact = document.getElementById(id)
+  if (contact.style.display === "block") {
+    contact.style.display = "none"
+  } else {
+    contact.style.display = "block"
+  }
+}
+
 const displayPeople = () => {
   const allPosts = document.getElementById("all-posts")
+  // eslint-disable-next-line array-callback-return
   arrayOfPeople.map((post, i) => {
     const li = document.createElement("li")
     const { name, phone, email, dob, location, picture } = post
     const img = document.createElement("img")
+    img.src = picture.large
     const btn = document.createElement("button")
     const bText = document.createTextNode("More Info")
     const myPara = document.createElement("p")
-    myPara.setAttribute("id", "more-info")
+    myPara.setAttribute("id", `more-info-${i}`)
     myPara.style.display = "none"
-    img.src = post.picture.large
     li.setAttribute("id", "list")
-    btn.setAttribute("onclick", "moreInfo(this)")
+    // btn.setAttribute("id", `more-info-${i}`)
     btn.setAttribute("id", "btn")
+    btn.addEventListener("click", () => {
+      moreInfo(myPara.id)
+    })
     const contactInfo = document.createTextNode(
       `Name: ${post.name.first} ${post.name.last}`
     )
@@ -43,16 +59,6 @@ const displayPeople = () => {
     myPara.appendChild(moreContactInfo)
     li.appendChild(myPara)
   })
-}
-
-const moreInfo = () => {
-  console.log("Hello")
-  const x = document.getElementById("more-info")
-  if (x.style.display === "none") {
-    x.style.display = "block"
-  } else {
-    x.style.display = "none"
-  }
 }
 
 // This function logs the results in your browser's console
